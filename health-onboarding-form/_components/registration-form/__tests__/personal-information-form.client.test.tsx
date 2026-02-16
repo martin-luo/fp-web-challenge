@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { PersonalInformationForm } from "./personal-information-form";
+import { PersonalInformationForm } from "../personal-information-form";
 
 describe("PersonalInformationForm", () => {
   it("renders all inputs and a single submit button", () => {

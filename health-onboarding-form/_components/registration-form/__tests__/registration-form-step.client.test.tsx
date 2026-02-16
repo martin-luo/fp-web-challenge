@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react";
-import { RegistrationFormStep } from "./registration-form-step";
+import { RegistrationFormStep } from "../registration-form-step";
 
 describe("RegistrationFormStep", () => {
   it("renders the correct number of steps", () => {
