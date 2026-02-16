@@ -13,6 +13,7 @@ import {
 } from "./health-info-disclaimer-form";
 import { MembershipForm, MembershipSelection } from "./membership-form";
 import healthConditions from "@/assets/health-conditions.json";
+import { PasswordForm, PasswordFormData } from "./password-form";
 
 export const RegistrationForm = () => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -21,6 +22,9 @@ export const RegistrationForm = () => {
     useState<HealthInfoDisclaimerData | null>(null);
   const [membershipData, setMembershipData] =
     useState<MembershipSelection | null>(null);
+  const [passwordData, setPasswordData] = useState<PasswordFormData | null>(
+    null,
+  );
 
   const handlePIISubmit = (piiData: PersonalInformation) => {
     setPiiData(piiData);
@@ -51,6 +55,13 @@ export const RegistrationForm = () => {
     ),
   );
 
+  const handlePasswordSubmit = (data: PasswordFormData) => {
+    setPasswordData(data);
+    setCurrentStep(4);
+
+    // todo: submit the data to the server or store it in a global state for later steps
+  };
+
   return (
     <Stack spacing={{ xs: 2, sm: 3 }} sx={{ pb: { xs: 3, sm: 4 } }}>
       <RegistrationFormStep currentStep={currentStep} />
@@ -71,6 +82,13 @@ export const RegistrationForm = () => {
           requiresMedicalClearance={requiresMedicalClearance}
           onSubmit={handleMembershipSubmit}
           onBack={() => setCurrentStep(1)}
+        />
+      )}
+
+      {currentStep === 3 && (
+        <PasswordForm
+          onSubmit={handlePasswordSubmit}
+          onBack={() => setCurrentStep(2)}
         />
       )}
     </Stack>
