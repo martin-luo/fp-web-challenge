@@ -49,12 +49,11 @@ describe("HealthInfoDisclaimerForm", () => {
     expect(onBack).toHaveBeenCalledTimes(1);
   });
 
-  it("does not submit when no selections are made (edge case)", async () => {
-    const user = userEvent.setup();
-    const onSubmit = jest.fn();
-    render(<HealthInfoDisclaimerForm onSubmit={onSubmit} onBack={jest.fn()} />);
+  it("does not submit when no selections are made", async () => {
+    render(
+      <HealthInfoDisclaimerForm onSubmit={jest.fn()} onBack={jest.fn()} />,
+    );
 
-    await user.click(screen.getByRole("button", { name: /continue/i }));
-    expect(onSubmit).not.toHaveBeenCalled();
+    expect(screen.getByRole("button", { name: /continue/i })).toBeDisabled();
   });
 });
