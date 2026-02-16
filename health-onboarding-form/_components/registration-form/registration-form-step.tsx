@@ -5,6 +5,7 @@ export enum RegistrationStep {
   PersonalInfo = "personal-info",
   HealthInfo = "health-info",
   Membership = "membership",
+  Password = "password",
   Review = "review",
 }
 
@@ -12,6 +13,7 @@ export const RegistrationStepLabels = {
   [RegistrationStep.PersonalInfo]: "Personal Info",
   [RegistrationStep.HealthInfo]: "Health Info",
   [RegistrationStep.Membership]: "Membership",
+  [RegistrationStep.Password]: "Password",
   [RegistrationStep.Review]: "Review",
 };
 
