@@ -1,3 +1,5 @@
+"use server";
+
 /**
  * Mock Authentication Utilities for Coding Challenge
  *
