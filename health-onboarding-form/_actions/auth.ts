@@ -1,3 +1,5 @@
+"use server";
+
 /**
  * Mock Authentication Utilities for Coding Challenge
  *
@@ -63,7 +65,7 @@ export interface User {
  */
 export async function login(
   email: string,
-  password: string
+  password: string,
 ): Promise<{ token: string; user: User }> {
   await randomDelay(500, 2000);
 
