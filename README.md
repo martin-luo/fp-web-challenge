@@ -1,5 +1,27 @@
 # Senior Web Engineer - Coding Challenge
 
+## Project Focus (This Submission)
+
+I worked on **Option 2: Health Onboarding Form** located in `health-onboarding-form/`.
+
+### How to Run (Health Onboarding Form)
+
+```bash
+cd health-onboarding-form
+pnpm install
+pnpm dev
+```
+
+Then open `http://localhost:3000`.
+
+## Potential Improvements
+
+- Add end-to-end browser tests (e.g., Playwright) to cover the full onboarding flow.
+- Set up i18n for multi-language support across registration pages.
+- Add client/server validation rules and shared schema (e.g., Zod).
+- Improve accessibility with additional ARIA labels and keyboard focus states.
+- Add analytics events for step completion and drop-off tracking.
+
 Welcome! As the next step in our interview process, we have a short, practical coding challenge. We expect this to take around **2 hours**.
 
 ## Important Guidelines

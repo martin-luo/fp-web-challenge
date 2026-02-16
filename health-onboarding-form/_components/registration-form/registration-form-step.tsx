@@ -5,19 +5,19 @@ export enum RegistrationStep {
   PersonalInfo = "personal-info",
   HealthInfo = "health-info",
   Membership = "membership",
-  Password = "password",
   Review = "review",
+  Password = "password",
 }
 
 export const RegistrationStepLabels = {
   [RegistrationStep.PersonalInfo]: "Personal Info",
   [RegistrationStep.HealthInfo]: "Health Info",
   [RegistrationStep.Membership]: "Membership",
-  [RegistrationStep.Password]: "Password",
   [RegistrationStep.Review]: "Review",
+  [RegistrationStep.Password]: "Password",
 };
 
-const steps = Object.values(RegistrationStepLabels);
+export const steps = Object.values(RegistrationStepLabels);
 
 type RegistrationFormStepProps = {
   currentStep: number;
@@ -32,8 +32,6 @@ export const RegistrationFormStep = ({
       alternativeLabel
       component="ol"
       sx={{
-        mx: "auto",
-        maxWidth: 900,
         px: { xs: 1, sm: 2, md: 3 },
         py: { xs: 2, sm: 3 },
         "& .MuiStepLabel-label": {

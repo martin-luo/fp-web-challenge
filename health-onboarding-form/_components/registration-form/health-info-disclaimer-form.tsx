@@ -17,17 +17,19 @@ export type HealthInfoDisclaimerData = {
 };
 
 type HealthInfoDisclaimerFormProps = {
+  initialSelectedConditionIds?: string[];
   onSubmit: (data: HealthInfoDisclaimerData) => void;
   onBack: () => void;
 };
 
 export const HealthInfoDisclaimerForm = ({
+  initialSelectedConditionIds,
   onSubmit,
   onBack,
 }: HealthInfoDisclaimerFormProps) => {
   const [selectedConditionIds, setSelectedConditionIds] = React.useState<
     string[]
-  >([]);
+  >(initialSelectedConditionIds ?? []);
 
   const canSubmit = selectedConditionIds.length > 0;
 

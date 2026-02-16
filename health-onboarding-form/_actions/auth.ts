@@ -87,6 +87,44 @@ export async function login(
 }
 
 /**
+ * Simulates user registration with random delay (800-2000ms)
+ *
+ * @param registration - Registration payload
+ * @returns Promise with JWT token and user object
+ * @throws Error if email includes 'error' (mock failure)
+ */
+export async function register(registration: {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  membershipId: string;
+}): Promise<{ token: string; user: User }> {
+  await randomDelay(800, 2000);
+
+  if (registration.email.includes("error")) {
+    throw new Error("Registration failed");
+  }
+
+  const membershipType = registration.membershipId.startsWith("elite")
+    ? "elite"
+    : registration.membershipId.startsWith("premium")
+      ? "premium"
+      : "basic";
+
+  const user: User = {
+    id: "user-456",
+    email: registration.email,
+    name: `${registration.firstName} ${registration.lastName}`.trim(),
+    membershipType,
+    memberSince: new Date().toISOString().slice(0, 10),
+  };
+
+  const token = generateMockToken(user);
+  return { token, user };
+}
+
+/**
  * Simulates token verification with random delay (100-500ms)
  *
  * @param token - JWT token to verify
@@ -108,7 +146,9 @@ export async function verifyToken(token: string): Promise<User> {
 /**
  * Simulates logout (no-op in this mock)
  */
-export function logout(): void {
+export async function logout(): Promise<void> {
+  await randomDelay(800, 2000);
+
   // In a real app, this would clear tokens, invalidate sessions, etc.
   return;
 }
@@ -136,7 +176,9 @@ function randomDelay(min: number, max: number): Promise<void> {
  * Get current user from stored token (client-side helper)
  * Expects token to be stored in localStorage with key 'auth_token'
  */
-export function getCurrentUser(): User | null {
+export async function getCurrentUser(): Promise<User | null> {
+  await randomDelay(800, 2000);
+
   if (typeof localStorage === "undefined") {
     return null;
   }
@@ -155,6 +197,8 @@ export function getCurrentUser(): User | null {
 /**
  * Check if user is authenticated
  */
-export function isAuthenticated(): boolean {
+export async function isAuthenticated(): Promise<boolean> {
+  await randomDelay(800, 2000);
+
   return getCurrentUser() !== null;
 }

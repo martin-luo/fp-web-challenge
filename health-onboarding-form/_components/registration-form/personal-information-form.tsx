@@ -10,10 +10,12 @@ export type PersonalInformation = {
 
 type PersonalInformationFormProps = {
   onSubmit: (data: PersonalInformation) => void;
+  initialValues?: Partial<PersonalInformation>;
 };
 
 export const PersonalInformationForm = ({
   onSubmit,
+  initialValues,
 }: PersonalInformationFormProps) => {
   const latestDataRef = React.useRef<PersonalInformation | null>(null);
 
@@ -39,8 +41,6 @@ export const PersonalInformationForm = ({
       <Stack
         spacing={{ xs: 2, sm: 2.5, md: 3 }}
         sx={{
-          mx: "auto",
-          maxWidth: 720,
           px: { xs: 2, sm: 3, md: 4 },
           py: { xs: 2, sm: 3 },
         }}
@@ -60,6 +60,7 @@ export const PersonalInformationForm = ({
           autoComplete="given-name"
           fullWidth
           required
+          defaultValue={initialValues?.firstName ?? ""}
         />
         <TextField
           label="Last name"
@@ -68,6 +69,7 @@ export const PersonalInformationForm = ({
           autoComplete="family-name"
           fullWidth
           required
+          defaultValue={initialValues?.lastName ?? ""}
         />
         <TextField
           label="Email"
@@ -77,6 +79,7 @@ export const PersonalInformationForm = ({
           autoComplete="email"
           fullWidth
           required
+          defaultValue={initialValues?.email ?? ""}
         />
         <TextField
           label="Mobile"
@@ -86,6 +89,7 @@ export const PersonalInformationForm = ({
           autoComplete="tel"
           fullWidth
           required
+          defaultValue={initialValues?.mobile ?? ""}
         />
         <Button type="submit" variant="contained" fullWidth>
           Submit

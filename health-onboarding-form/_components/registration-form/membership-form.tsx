@@ -20,6 +20,7 @@ export type MembershipSelection = {
 
 type MembershipFormProps = {
   requiresMedicalClearance: boolean;
+  initialMembershipId?: string;
   onSubmit: (data: MembershipSelection) => void;
   onBack: () => void;
 };
@@ -31,10 +32,13 @@ const currencyFormatter = new Intl.NumberFormat("en-US", {
 
 export const MembershipForm = ({
   requiresMedicalClearance,
+  initialMembershipId,
   onSubmit,
   onBack,
 }: MembershipFormProps) => {
-  const [selectedMembershipId, setSelectedMembershipId] = useState("");
+  const [selectedMembershipId, setSelectedMembershipId] = useState(
+    initialMembershipId ?? "",
+  );
   const [warningOpen, setWarningOpen] = useState(false);
 
   const isRestrictedTier = (tier: (typeof membershipTiers)[number]) =>
@@ -64,8 +68,6 @@ export const MembershipForm = ({
       <Stack
         spacing={{ xs: 2, sm: 2.5, md: 3 }}
         sx={{
-          mx: "auto",
-          maxWidth: 720,
           px: { xs: 2, sm: 3, md: 4 },
           py: { xs: 2, sm: 3 },
         }}
