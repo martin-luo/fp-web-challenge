@@ -3,6 +3,7 @@
 import { Stack } from "@mui/material";
 import { useState } from "react";
 import { register } from "@/_actions/auth";
+import { useRouter } from "next/navigation";
 import { RegistrationFormStep } from "./registration-form-step";
 import {
   PersonalInformation,
@@ -18,6 +19,7 @@ import { PasswordForm, PasswordFormData } from "./password-form";
 import { ReviewForm } from "./review-form";
 
 export const RegistrationForm = () => {
+  const router = useRouter();
   const [currentStep, setCurrentStep] = useState(0);
   const [piiData, setPiiData] = useState<PersonalInformation | null>(null);
   const [healthInfoData, setHealthInfoData] =
@@ -79,7 +81,7 @@ export const RegistrationForm = () => {
         membershipId: membershipData.membershipId,
       });
       localStorage.setItem("auth_token", token);
-      // todo: redirect to confirmation page
+      router.replace("/confirmation");
     } catch (err: unknown) {
       setSubmitError((err as Error).message);
     } finally {
