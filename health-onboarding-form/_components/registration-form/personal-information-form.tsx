@@ -36,10 +36,23 @@ export const PersonalInformationForm = ({
 
   return (
     <form onSubmit={handleSubmit}>
-      <section>
-        <Typography>Please enter your personal information</Typography>
-      </section>
-      <Stack spacing={2} sx={{ mt: 2 }}>
+      <Stack
+        spacing={{ xs: 2, sm: 2.5, md: 3 }}
+        sx={{
+          mx: "auto",
+          maxWidth: 720,
+          px: { xs: 2, sm: 3, md: 4 },
+          py: { xs: 2, sm: 3 },
+        }}
+      >
+        <section>
+          <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
+            Personal Information
+          </Typography>
+          <Typography variant="body1" color="text.secondary">
+            Please provide your contact details so we can create your account.
+          </Typography>
+        </section>
         <TextField
           label="First name"
           name="firstName"
@@ -74,7 +87,7 @@ export const PersonalInformationForm = ({
           fullWidth
           required
         />
-        <Button type="submit" variant="contained">
+        <Button type="submit" variant="contained" fullWidth>
           Submit
         </Button>
       </Stack>

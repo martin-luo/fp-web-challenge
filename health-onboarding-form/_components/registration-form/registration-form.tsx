@@ -1,17 +1,22 @@
 "use client";
 
-import React from "react";
+import { Stack } from "@mui/material";
+import { useState } from "react";
 import { RegistrationFormStep } from "./registration-form-step";
 import {
   PersonalInformation,
   PersonalInformationForm,
 } from "./personal-information-form";
+import {
+  HealthInfoDisclaimerData,
+  HealthInfoDisclaimerForm,
+} from "./health-info-disclaimer-form";
 
 export const RegistrationForm = () => {
-  const [currentStep, setCurrentStep] = React.useState(0);
-  const [piiData, setPiiData] = React.useState<PersonalInformation | null>(
-    null,
-  );
+  const [currentStep, setCurrentStep] = useState(0);
+  const [piiData, setPiiData] = useState<PersonalInformation | null>(null);
+  const [healthInfoData, setHealthInfoData] =
+    useState<HealthInfoDisclaimerData | null>(null);
 
   const handlePIISubmit = (piiData: PersonalInformation) => {
     setPiiData(piiData);
@@ -20,13 +25,27 @@ export const RegistrationForm = () => {
     // todo: submit the data to the server or store it in a global state for later steps
   };
 
+  const handleHealthInfoSubmit = (data: HealthInfoDisclaimerData) => {
+    setHealthInfoData(data);
+    setCurrentStep(2);
+
+    // todo: submit the data to the server or store it in a global state for later steps
+  };
+
   return (
-    <>
+    <Stack spacing={{ xs: 2, sm: 3 }} sx={{ pb: { xs: 3, sm: 4 } }}>
       <RegistrationFormStep currentStep={currentStep} />
 
       {currentStep === 0 && (
         <PersonalInformationForm onSubmit={handlePIISubmit} />
       )}
-    </>
+
+      {currentStep === 1 && (
+        <HealthInfoDisclaimerForm
+          onSubmit={handleHealthInfoSubmit}
+          onBack={() => setCurrentStep(0)}
+        />
+      )}
+    </Stack>
   );
 };
