@@ -6,7 +6,7 @@ describe("MembershipForm", () => {
   it("disables continue until a membership is selected", () => {
     render(
       <MembershipForm
-        selectedConditionIds={[]}
+        requiresMedicalClearance={false}
         onSubmit={jest.fn()}
         onBack={jest.fn()}
       />,
@@ -21,7 +21,7 @@ describe("MembershipForm", () => {
 
     render(
       <MembershipForm
-        selectedConditionIds={[]}
+        requiresMedicalClearance={false}
         onSubmit={onSubmit}
         onBack={jest.fn()}
       />,
@@ -43,7 +43,7 @@ describe("MembershipForm", () => {
 
     render(
       <MembershipForm
-        selectedConditionIds={["heart-disease"]}
+        requiresMedicalClearance={true}
         onSubmit={onSubmit}
         onBack={jest.fn()}
       />,
@@ -66,7 +66,7 @@ describe("MembershipForm", () => {
 
     render(
       <MembershipForm
-        selectedConditionIds={[]}
+        requiresMedicalClearance={false}
         onSubmit={jest.fn()}
         onBack={onBack}
       />,

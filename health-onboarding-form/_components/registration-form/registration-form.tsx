@@ -12,6 +12,7 @@ import {
   HealthInfoDisclaimerForm,
 } from "./health-info-disclaimer-form";
 import { MembershipForm, MembershipSelection } from "./membership-form";
+import healthConditions from "@/assets/health-conditions.json";
 
 export const RegistrationForm = () => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -42,6 +43,14 @@ export const RegistrationForm = () => {
     // todo: submit the data to the server or store it in a global state for later steps
   };
 
+  const requiresMedicalClearance = (
+    healthInfoData?.selectedConditionIds ?? []
+  ).some((id) =>
+    healthConditions.some(
+      (condition) => condition.id === id && condition.requiresMedicalClearance,
+    ),
+  );
+
   return (
     <Stack spacing={{ xs: 2, sm: 3 }} sx={{ pb: { xs: 3, sm: 4 } }}>
       <RegistrationFormStep currentStep={currentStep} />
@@ -59,7 +68,7 @@ export const RegistrationForm = () => {
 
       {currentStep === 2 && (
         <MembershipForm
-          selectedConditionIds={healthInfoData?.selectedConditionIds ?? []}
+          requiresMedicalClearance={requiresMedicalClearance}
           onSubmit={handleMembershipSubmit}
           onBack={() => setCurrentStep(1)}
         />

@@ -11,8 +11,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import React from "react";
-import healthConditions from "@/assets/health-conditions.json";
+import { FormEvent, useState } from "react";
 import membershipTiers from "@/assets/membership-tiers.json";
 
 export type MembershipSelection = {
@@ -20,7 +19,7 @@ export type MembershipSelection = {
 };
 
 type MembershipFormProps = {
-  selectedConditionIds: string[];
+  requiresMedicalClearance: boolean;
   onSubmit: (data: MembershipSelection) => void;
   onBack: () => void;
 };
@@ -31,18 +30,12 @@ const currencyFormatter = new Intl.NumberFormat("en-US", {
 });
 
 export const MembershipForm = ({
-  selectedConditionIds,
+  requiresMedicalClearance,
   onSubmit,
   onBack,
 }: MembershipFormProps) => {
-  const [selectedMembershipId, setSelectedMembershipId] = React.useState("");
-  const [warningOpen, setWarningOpen] = React.useState(false);
-
-  const requiresMedicalClearance = selectedConditionIds.some((id) =>
-    healthConditions.some(
-      (condition) => condition.id === id && condition.requiresMedicalClearance,
-    ),
-  );
+  const [selectedMembershipId, setSelectedMembershipId] = useState("");
+  const [warningOpen, setWarningOpen] = useState(false);
 
   const isRestrictedTier = (tier: (typeof membershipTiers)[number]) =>
     requiresMedicalClearance && tier.accessHours === "24/7";
@@ -59,7 +52,7 @@ export const MembershipForm = ({
     setSelectedMembershipId(value);
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!selectedMembershipId) return;
 
