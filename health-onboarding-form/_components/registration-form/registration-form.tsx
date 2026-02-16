@@ -4,7 +4,11 @@ import { Link, Stack } from "@mui/material";
 import { useState } from "react";
 import { register } from "@/_actions/auth";
 import { useRouter } from "next/navigation";
-import { RegistrationFormStep } from "./registration-form-step";
+import {
+  RegistrationFormStep,
+  RegistrationStep,
+  steps,
+} from "./registration-form-step";
 import {
   PersonalInformation,
   PersonalInformationForm,
@@ -20,7 +24,9 @@ import { ReviewForm } from "./review-form";
 
 export const RegistrationForm = () => {
   const router = useRouter();
-  const [currentStep, setCurrentStep] = useState(0);
+  const [currentStep, setCurrentStep] = useState<RegistrationStep>(
+    RegistrationStep.PersonalInfo,
+  );
   const [piiData, setPiiData] = useState<PersonalInformation | null>(null);
   const [healthInfoData, setHealthInfoData] =
     useState<HealthInfoDisclaimerData | null>(null);
@@ -34,21 +40,21 @@ export const RegistrationForm = () => {
 
   const handlePIISubmit = (piiData: PersonalInformation) => {
     setPiiData(piiData);
-    setCurrentStep(1);
+    setCurrentStep(RegistrationStep.HealthInfo);
 
     // todo: submit the data to the server or store it in a global state for later steps
   };
 
   const handleHealthInfoSubmit = (data: HealthInfoDisclaimerData) => {
     setHealthInfoData(data);
-    setCurrentStep(2);
+    setCurrentStep(RegistrationStep.Membership);
 
     // todo: submit the data to the server or store it in a global state for later steps
   };
 
   const handleMembershipSubmit = (data: MembershipSelection) => {
     setMembershipData(data);
-    setCurrentStep(3);
+    setCurrentStep(RegistrationStep.Review);
 
     // todo: submit the data to the server or store it in a global state for later steps
   };
@@ -60,6 +66,7 @@ export const RegistrationForm = () => {
       (condition) => condition.id === id && condition.requiresMedicalClearance,
     ),
   );
+
   const handlePasswordSubmit = async (data: PasswordFormData) => {
     setPasswordData(data);
     if (!piiData || !membershipData) {
@@ -112,48 +119,48 @@ export const RegistrationForm = () => {
         <span aria-hidden="true">←</span>
         Back to landing page
       </Link>
-      <RegistrationFormStep currentStep={currentStep} />
+      <RegistrationFormStep currentStep={steps.indexOf(currentStep)} />
 
-      {currentStep === 0 && (
+      {currentStep === RegistrationStep.PersonalInfo && (
         <PersonalInformationForm
           onSubmit={handlePIISubmit}
           initialValues={piiData ?? undefined}
         />
       )}
 
-      {currentStep === 1 && (
+      {currentStep === RegistrationStep.HealthInfo && (
         <HealthInfoDisclaimerForm
           onSubmit={handleHealthInfoSubmit}
-          onBack={() => setCurrentStep(0)}
+          onBack={() => setCurrentStep(RegistrationStep.PersonalInfo)}
           initialSelectedConditionIds={
             healthInfoData?.selectedConditionIds ?? undefined
           }
         />
       )}
 
-      {currentStep === 2 && (
+      {currentStep === RegistrationStep.Membership && (
         <MembershipForm
           requiresMedicalClearance={requiresMedicalClearance}
           onSubmit={handleMembershipSubmit}
-          onBack={() => setCurrentStep(1)}
+          onBack={() => setCurrentStep(RegistrationStep.HealthInfo)}
           initialMembershipId={membershipData?.membershipId ?? undefined}
         />
       )}
 
-      {currentStep === 3 && (
+      {currentStep === RegistrationStep.Review && (
         <ReviewForm
           personalInfo={piiData}
           healthInfo={healthInfoData}
           membership={membershipData}
-          onBack={() => setCurrentStep(2)}
-          onConfirm={() => setCurrentStep(4)}
+          onBack={() => setCurrentStep(RegistrationStep.Membership)}
+          onConfirm={() => setCurrentStep(RegistrationStep.Password)}
         />
       )}
 
-      {currentStep === 4 && (
+      {currentStep === RegistrationStep.Password && (
         <PasswordForm
           onSubmit={handlePasswordSubmit}
-          onBack={() => setCurrentStep(3)}
+          onBack={() => setCurrentStep(RegistrationStep.Review)}
           isLoading={isSubmitting}
           error={submitError ?? undefined}
         />

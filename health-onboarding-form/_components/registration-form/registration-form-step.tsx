@@ -17,7 +17,7 @@ export const RegistrationStepLabels = {
   [RegistrationStep.Password]: "Password",
 };
 
-const steps = Object.values(RegistrationStepLabels);
+export const steps = Object.values(RegistrationStepLabels);
 
 type RegistrationFormStepProps = {
   currentStep: number;
