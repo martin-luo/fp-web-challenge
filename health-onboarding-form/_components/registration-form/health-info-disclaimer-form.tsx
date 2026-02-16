@@ -2,7 +2,6 @@ import {
   Button,
   Checkbox,
   FormControl,
-  FormControlLabel,
   InputLabel,
   ListItemText,
   MenuItem,
@@ -10,7 +9,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import React, { FormEvent } from "react";
+import React from "react";
 import healthConditions from "@/assets/health-conditions.json";
 
 export type HealthInfoDisclaimerData = {
@@ -32,7 +31,7 @@ export const HealthInfoDisclaimerForm = ({
 
   const canSubmit = selectedConditionIds.length > 0;
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!canSubmit) return;
 
@@ -41,12 +40,27 @@ export const HealthInfoDisclaimerForm = ({
 
   return (
     <form onSubmit={handleSubmit}>
-      <Stack spacing={2}>
+      <Stack
+        spacing={{ xs: 2, sm: 2.5, md: 3 }}
+        sx={{
+          mx: "auto",
+          maxWidth: 720,
+          px: { xs: 2, sm: 3, md: 4 },
+          py: { xs: 2, sm: 3 },
+        }}
+      >
         <section>
-          <Typography>
+          <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
+            Health Information Disclaimer
+          </Typography>
+          <Typography variant="body1" color="text.secondary">
             We collect your health information to tailor your program and keep
             you safe. Your data is protected in accordance with applicable
             regulations and acts.
+          </Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+            Select any conditions that apply. If none apply, choose “None of the
+            above” from the list.
           </Typography>
         </section>
 
@@ -84,11 +98,20 @@ export const HealthInfoDisclaimerForm = ({
           </Select>
         </FormControl>
 
-        <Stack direction="row" spacing={2} justifyContent="space-between">
-          <Button type="button" variant="outlined" onClick={onBack}>
+        <Stack
+          direction={{ xs: "column-reverse", sm: "row" }}
+          spacing={2}
+          justifyContent="space-between"
+        >
+          <Button type="button" variant="outlined" onClick={onBack} fullWidth>
             Back
           </Button>
-          <Button type="submit" variant="contained" disabled={!canSubmit}>
+          <Button
+            type="submit"
+            variant="contained"
+            disabled={!canSubmit}
+            fullWidth
+          >
             Continue
           </Button>
         </Stack>

@@ -27,7 +27,20 @@ export const RegistrationFormStep = ({
   currentStep,
 }: RegistrationFormStepProps) => {
   return (
-    <Stepper activeStep={currentStep} alternativeLabel component="ol">
+    <Stepper
+      activeStep={currentStep}
+      alternativeLabel
+      component="ol"
+      sx={{
+        mx: "auto",
+        maxWidth: 900,
+        px: { xs: 1, sm: 2, md: 3 },
+        py: { xs: 2, sm: 3 },
+        "& .MuiStepLabel-label": {
+          fontSize: { xs: "0.75rem", sm: "0.85rem", md: "0.95rem" },
+        },
+      }}
+    >
       {steps.map((label) => (
         <Step key={label} component="li">
           <StepLabel>{label}</StepLabel>

@@ -1,5 +1,6 @@
 "use client";
 
+import { Stack } from "@mui/material";
 import { useState } from "react";
 import { RegistrationFormStep } from "./registration-form-step";
 import {
@@ -32,7 +33,7 @@ export const RegistrationForm = () => {
   };
 
   return (
-    <>
+    <Stack spacing={{ xs: 2, sm: 3 }} sx={{ pb: { xs: 3, sm: 4 } }}>
       <RegistrationFormStep currentStep={currentStep} />
 
       {currentStep === 0 && (
@@ -45,6 +46,6 @@ export const RegistrationForm = () => {
           onBack={() => setCurrentStep(0)}
         />
       )}
-    </>
+    </Stack>
   );
 };
