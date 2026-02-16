@@ -11,12 +11,15 @@ import {
   HealthInfoDisclaimerData,
   HealthInfoDisclaimerForm,
 } from "./health-info-disclaimer-form";
+import { MembershipForm, MembershipSelection } from "./membership-form";
 
 export const RegistrationForm = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [piiData, setPiiData] = useState<PersonalInformation | null>(null);
   const [healthInfoData, setHealthInfoData] =
     useState<HealthInfoDisclaimerData | null>(null);
+  const [membershipData, setMembershipData] =
+    useState<MembershipSelection | null>(null);
 
   const handlePIISubmit = (piiData: PersonalInformation) => {
     setPiiData(piiData);
@@ -28,6 +31,13 @@ export const RegistrationForm = () => {
   const handleHealthInfoSubmit = (data: HealthInfoDisclaimerData) => {
     setHealthInfoData(data);
     setCurrentStep(2);
+
+    // todo: submit the data to the server or store it in a global state for later steps
+  };
+
+  const handleMembershipSubmit = (data: MembershipSelection) => {
+    setMembershipData(data);
+    setCurrentStep(3);
 
     // todo: submit the data to the server or store it in a global state for later steps
   };
@@ -44,6 +54,14 @@ export const RegistrationForm = () => {
         <HealthInfoDisclaimerForm
           onSubmit={handleHealthInfoSubmit}
           onBack={() => setCurrentStep(0)}
+        />
+      )}
+
+      {currentStep === 2 && (
+        <MembershipForm
+          selectedConditionIds={healthInfoData?.selectedConditionIds ?? []}
+          onSubmit={handleMembershipSubmit}
+          onBack={() => setCurrentStep(1)}
         />
       )}
     </Stack>
