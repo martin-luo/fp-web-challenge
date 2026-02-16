@@ -1,4 +1,3 @@
-import { register } from "@/_actions/auth";
 import {
   Alert,
   Box,
@@ -13,7 +12,6 @@ import healthConditions from "@/assets/health-conditions.json";
 import membershipTiers from "@/assets/membership-tiers.json";
 import { HealthInfoDisclaimerData } from "./health-info-disclaimer-form";
 import { MembershipSelection } from "./membership-form";
-import { PasswordFormData } from "./password-form";
 import { PersonalInformation } from "./personal-information-form";
 
 type ReviewFormProps = {
@@ -21,6 +19,7 @@ type ReviewFormProps = {
   healthInfo: HealthInfoDisclaimerData | null;
   membership: MembershipSelection | null;
   onBack: () => void;
+  onConfirm: () => void;
 };
 
 const getConditionNames = (ids: string[]) =>
@@ -42,33 +41,18 @@ export const ReviewForm = ({
   healthInfo,
   membership,
   onBack,
+  onConfirm,
 }: ReviewFormProps) => {
-  const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState("");
 
-  const handleConfirm = async () => {
+  const handleConfirm = () => {
     if (!personalInfo || !membership) {
       setError("Missing required information. Please review your details.");
       return;
     }
 
-    setLoading(true);
     setError("");
-
-    try {
-      const { token } = await register({
-        firstName: personalInfo.firstName,
-        lastName: personalInfo.lastName,
-        email: personalInfo.email,
-        membershipId: membership.membershipId,
-      });
-      localStorage.setItem("auth_token", token);
-      // todo: redirect to confirmation page
-    } catch (err: unknown) {
-      setError((err as Error).message);
-    } finally {
-      setLoading(false);
-    }
+    onConfirm();
   };
 
   const healthConditionNames = getConditionNames(
@@ -91,6 +75,9 @@ export const ReviewForm = ({
         </Typography>
         <Typography variant="body1" color="text.secondary">
           Please confirm your details before submitting your registration.
+        </Typography>
+        <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+          You will set your password in the next step.
         </Typography>
       </section>
 
@@ -180,9 +167,8 @@ export const ReviewForm = ({
           variant="contained"
           fullWidth
           onClick={handleConfirm}
-          disabled={loading}
         >
-          {loading ? "Submitting..." : "Confirm & Submit"}
+          Continue
         </Button>
       </Stack>
     </Stack>

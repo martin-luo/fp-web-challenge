@@ -7,7 +7,9 @@ describe("PasswordForm", () => {
     const user = userEvent.setup();
     render(<PasswordForm onSubmit={jest.fn()} onBack={jest.fn()} />);
 
-    const continueButton = screen.getByRole("button", { name: /continue/i });
+    const continueButton = screen.getByRole("button", {
+      name: /confirm & submit/i,
+    });
     expect(continueButton).toBeDisabled();
 
     await user.type(screen.getByLabelText(/password$/i), "Secret123!");
@@ -23,12 +25,24 @@ describe("PasswordForm", () => {
 
     await user.type(screen.getByLabelText(/password$/i), "Secret123!");
     await user.type(screen.getByLabelText(/confirm password/i), "Secret123!");
-    await user.click(screen.getByRole("button", { name: /continue/i }));
+    await user.click(screen.getByRole("button", { name: /confirm & submit/i }));
 
     expect(onSubmit).toHaveBeenCalledTimes(1);
     expect(onSubmit).toHaveBeenCalledWith({
       password: "Secret123!",
     });
+  });
+
+  it("shows error when provided", () => {
+    render(
+      <PasswordForm
+        onSubmit={jest.fn()}
+        onBack={jest.fn()}
+        error="Something went wrong"
+      />,
+    );
+
+    expect(screen.getByText(/something went wrong/i)).toBeInTheDocument();
   });
 
   it("calls onBack when back button is clicked", async () => {

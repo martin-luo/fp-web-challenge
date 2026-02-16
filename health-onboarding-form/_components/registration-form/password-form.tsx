@@ -1,4 +1,4 @@
-import { Button, Stack, TextField, Typography } from "@mui/material";
+import { Alert, Button, Stack, TextField, Typography } from "@mui/material";
 import React from "react";
 
 export type PasswordFormData = {
@@ -8,9 +8,16 @@ export type PasswordFormData = {
 type PasswordFormProps = {
   onSubmit: (data: PasswordFormData) => void;
   onBack: () => void;
+  isLoading?: boolean;
+  error?: string;
 };
 
-export const PasswordForm = ({ onSubmit, onBack }: PasswordFormProps) => {
+export const PasswordForm = ({
+  onSubmit,
+  onBack,
+  isLoading = false,
+  error,
+}: PasswordFormProps) => {
   const [password, setPassword] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState("");
 
@@ -23,7 +30,6 @@ export const PasswordForm = ({ onSubmit, onBack }: PasswordFormProps) => {
     event.preventDefault();
 
     if (!passwordsMatch) return;
-
     onSubmit({ password });
   };
 
@@ -47,6 +53,8 @@ export const PasswordForm = ({ onSubmit, onBack }: PasswordFormProps) => {
             sign in.
           </Typography>
         </section>
+
+        {error && <Alert severity="error">{error}</Alert>}
 
         <TextField
           label="Password"
@@ -89,9 +97,9 @@ export const PasswordForm = ({ onSubmit, onBack }: PasswordFormProps) => {
             type="submit"
             variant="contained"
             fullWidth
-            disabled={!passwordsMatch}
+            disabled={!passwordsMatch || isLoading}
           >
-            Continue
+            {isLoading ? "Submitting..." : "Confirm & Submit"}
           </Button>
         </Stack>
       </Stack>

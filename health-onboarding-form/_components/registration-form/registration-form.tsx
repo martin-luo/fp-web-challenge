@@ -2,6 +2,7 @@
 
 import { Stack } from "@mui/material";
 import { useState } from "react";
+import { register } from "@/_actions/auth";
 import { RegistrationFormStep } from "./registration-form-step";
 import {
   PersonalInformation,
@@ -26,6 +27,8 @@ export const RegistrationForm = () => {
   const [passwordData, setPasswordData] = useState<PasswordFormData | null>(
     null,
   );
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const handlePIISubmit = (piiData: PersonalInformation) => {
     setPiiData(piiData);
@@ -56,11 +59,32 @@ export const RegistrationForm = () => {
     ),
   );
 
-  const handlePasswordSubmit = (data: PasswordFormData) => {
+  const handlePasswordSubmit = async (data: PasswordFormData) => {
     setPasswordData(data);
-    setCurrentStep(4);
+    if (!piiData || !membershipData) {
+      setSubmitError(
+        "Missing required information. Please review your details.",
+      );
+      return;
+    }
 
-    // todo: submit the data to the server or store it in a global state for later steps
+    setSubmitError(null);
+    setIsSubmitting(true);
+
+    try {
+      const { token } = await register({
+        firstName: piiData.firstName,
+        lastName: piiData.lastName,
+        email: piiData.email,
+        membershipId: membershipData.membershipId,
+      });
+      localStorage.setItem("auth_token", token);
+      // todo: redirect to confirmation page
+    } catch (err: unknown) {
+      setSubmitError((err as Error).message);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -87,18 +111,21 @@ export const RegistrationForm = () => {
       )}
 
       {currentStep === 3 && (
-        <PasswordForm
-          onSubmit={handlePasswordSubmit}
-          onBack={() => setCurrentStep(2)}
-        />
-      )}
-
-      {currentStep === 4 && (
         <ReviewForm
           personalInfo={piiData}
           healthInfo={healthInfoData}
           membership={membershipData}
+          onBack={() => setCurrentStep(2)}
+          onConfirm={() => setCurrentStep(4)}
+        />
+      )}
+
+      {currentStep === 4 && (
+        <PasswordForm
+          onSubmit={handlePasswordSubmit}
           onBack={() => setCurrentStep(3)}
+          isLoading={isSubmitting}
+          error={submitError ?? undefined}
         />
       )}
     </Stack>
