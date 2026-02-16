@@ -1,8 +1,13 @@
+#!/bin/sh
+set -e
+
+cd health-onboarding-form
+
 echo "Running linter check..."
 pnpm lint-staged
 
 echo "Running lint fix..."
-pnpm lint --fix
+pnpm exec eslint --fix
 
 echo "Running format update..."
-pnpm prettier --write .
+pnpm exec prettier --write .
