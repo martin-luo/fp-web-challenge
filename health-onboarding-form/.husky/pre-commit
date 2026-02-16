@@ -1,0 +1,5 @@
+echo "Running linter check..."
+npx lint-staged
+
+echo "Running lint fix..."
+pnpm lint --fix
