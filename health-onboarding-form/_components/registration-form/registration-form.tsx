@@ -77,6 +77,7 @@ export const RegistrationForm = () => {
         firstName: piiData.firstName,
         lastName: piiData.lastName,
         email: piiData.email,
+        password: data.password,
         membershipId: membershipData.membershipId,
       });
       localStorage.setItem("auth_token", token);

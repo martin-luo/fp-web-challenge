@@ -97,6 +97,7 @@ export async function register(registration: {
   firstName: string;
   lastName: string;
   email: string;
+  password: string;
   membershipId: string;
 }): Promise<{ token: string; user: User }> {
   await randomDelay(800, 2000);
