@@ -60,7 +60,6 @@ export const RegistrationForm = () => {
       (condition) => condition.id === id && condition.requiresMedicalClearance,
     ),
   );
-
   const handlePasswordSubmit = async (data: PasswordFormData) => {
     setPasswordData(data);
     if (!piiData || !membershipData) {
@@ -94,13 +93,19 @@ export const RegistrationForm = () => {
       <RegistrationFormStep currentStep={currentStep} />
 
       {currentStep === 0 && (
-        <PersonalInformationForm onSubmit={handlePIISubmit} />
+        <PersonalInformationForm
+          onSubmit={handlePIISubmit}
+          initialValues={piiData ?? undefined}
+        />
       )}
 
       {currentStep === 1 && (
         <HealthInfoDisclaimerForm
           onSubmit={handleHealthInfoSubmit}
           onBack={() => setCurrentStep(0)}
+          initialSelectedConditionIds={
+            healthInfoData?.selectedConditionIds ?? undefined
+          }
         />
       )}
 
@@ -109,6 +114,7 @@ export const RegistrationForm = () => {
           requiresMedicalClearance={requiresMedicalClearance}
           onSubmit={handleMembershipSubmit}
           onBack={() => setCurrentStep(1)}
+          initialMembershipId={membershipData?.membershipId ?? undefined}
         />
       )}
 
