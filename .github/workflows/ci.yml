@@ -37,7 +37,7 @@ jobs:
         run: npm install -g pnpm
 
       - name: "📦 Install dependencies"
-        run: pnpm install
+        run: pnpm -C health-onboarding-form install
 
       - name: "🔍 Lint code"
-        run: pnpm lint
+        run: pnpm -C health-onboarding-form lint
