@@ -20,7 +20,7 @@ const customJestConfig: Config = {
     "!**/__tests__/**/*.server.(ts|tsx|js)",
   ],
   moduleNameMapper: {
-    "^@/(.*)$": "<rootDir>/src/$1",
+    "^@/(.*)$": "<rootDir>/$1",
   },
   transformIgnorePatterns: [
     "node_modules/(?!(next-intl|use-intl|yet-another-react-lightbox)/)",

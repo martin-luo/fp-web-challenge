@@ -22,7 +22,7 @@ const customJestConfig: Config = {
     "!**/*.server.(test|spec).(ts|tsx|js)",
   ],
   moduleNameMapper: {
-    "^@/(.*)$": "<rootDir>/src/$1",
+    "^@/(.*)$": "<rootDir>/$1",
   },
   collectCoverageFrom: [
     "src/**/*.{js,jsx,ts,tsx}",
