@@ -65,7 +65,7 @@ export interface User {
  */
 export async function login(
   email: string,
-  password: string
+  password: string,
 ): Promise<{ token: string; user: User }> {
   await randomDelay(500, 2000);
 

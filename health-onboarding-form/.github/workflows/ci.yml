@@ -6,7 +6,7 @@ name: CI
 on:
   pull_request:
     branches:
-      - '*'
+      - "*"
     types:
       - opened
       - edited
@@ -25,19 +25,19 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-      - name: '☁️ checkout repository'
+      - name: "☁️ checkout repository"
         uses: actions/checkout@v4
 
-      - name: '🔧 Use Node.js ${{ matrix.node-version }}'
+      - name: "🔧 Use Node.js ${{ matrix.node-version }}"
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: '🔧 Install pnpm'
+      - name: "🔧 Install pnpm"
         run: npm install -g pnpm
 
-      - name: '📦 Install dependencies'
+      - name: "📦 Install dependencies"
         run: pnpm install
 
-      - name: '🔍 Lint code'
+      - name: "🔍 Lint code"
         run: pnpm lint
