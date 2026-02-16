@@ -14,6 +14,7 @@ import {
 import { MembershipForm, MembershipSelection } from "./membership-form";
 import healthConditions from "@/assets/health-conditions.json";
 import { PasswordForm, PasswordFormData } from "./password-form";
+import { ReviewForm } from "./review-form";
 
 export const RegistrationForm = () => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -89,6 +90,15 @@ export const RegistrationForm = () => {
         <PasswordForm
           onSubmit={handlePasswordSubmit}
           onBack={() => setCurrentStep(2)}
+        />
+      )}
+
+      {currentStep === 4 && (
+        <ReviewForm
+          personalInfo={piiData}
+          healthInfo={healthInfoData}
+          membership={membershipData}
+          onBack={() => setCurrentStep(3)}
         />
       )}
     </Stack>
