@@ -1,5 +1,8 @@
 echo "Running linter check..."
-npx lint-staged
+pnpm lint-staged
 
 echo "Running lint fix..."
 pnpm lint --fix
+
+echo "Running format update..."
+pnpm prettier --write .
