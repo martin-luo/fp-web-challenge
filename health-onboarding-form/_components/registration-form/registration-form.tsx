@@ -1,6 +1,6 @@
 "use client";
 
-import { Stack } from "@mui/material";
+import { Link, Stack } from "@mui/material";
 import { useState } from "react";
 import { register } from "@/_actions/auth";
 import { useRouter } from "next/navigation";
@@ -93,6 +93,24 @@ export const RegistrationForm = () => {
       spacing={{ xs: 2, sm: 3 }}
       sx={{ pb: { xs: 3, sm: 4 }, mx: "auto", maxWidth: 720 }}
     >
+      <Link
+        href="/"
+        underline="none"
+        sx={{
+          px: { xs: 1, sm: 2, md: 3 },
+          py: { xs: 2, sm: 3 },
+          alignSelf: "flex-start",
+          display: "inline-flex",
+          alignItems: "center",
+          gap: 1,
+          fontWeight: 600,
+          color: "text.secondary",
+          "&:hover": { color: "text.primary" },
+        }}
+      >
+        <span aria-hidden="true">←</span>
+        Back to landing page
+      </Link>
       <RegistrationFormStep currentStep={currentStep} />
 
       {currentStep === 0 && (
