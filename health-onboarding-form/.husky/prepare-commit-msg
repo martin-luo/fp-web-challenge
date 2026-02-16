@@ -1,0 +1,30 @@
+#!/bin/bash
+COMMIT_MSG_FILE=$1
+COMMIT_SOURCE=$2
+
+## clipped out some branch name checking here
+regex="^(feat|bugfix|fix|refactor|chore|docs|release|hotfix|style|test|ci|revert|perf)(\([a-z0-9-]+\))?(\!)?\:\ (.*)"
+message=`cat $1` # grab original message
+
+# Allow git revert's default commit message format
+if [[ "$message" =~ ^Revert ]]; then
+    # This is a revert commit, allow it as-is
+    exit 0
+fi
+
+# Allow merge commits
+if [[ "$COMMIT_SOURCE" == "merge" ]]; then
+    exit 0
+fi
+
+if [[ "$message" =~ $regex ]]; then
+    commitType="${BASH_REMATCH[1]}"
+    commitScope="${BASH_REMATCH[2]}"
+    breakingChange="${BASH_REMATCH[3]}"
+    commitDetails="${BASH_REMATCH[4]}"
+    # echo "commitType  ${commitType}, ticket: ${ticket}, original commit message: ${original}"
+    printf "$commitType$commitScope$breakingChange: $commitDetails" > "$COMMIT_MSG_FILE"
+else
+    echo "Error: Commit message ($message) does not match pattern: $regex" >&2
+    exit 1
+fi
