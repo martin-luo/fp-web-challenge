@@ -32,8 +32,6 @@ export const RegistrationFormStep = ({
       alternativeLabel
       component="ol"
       sx={{
-        mx: "auto",
-        maxWidth: 900,
         px: { xs: 1, sm: 2, md: 3 },
         py: { xs: 2, sm: 3 },
         "& .MuiStepLabel-label": {

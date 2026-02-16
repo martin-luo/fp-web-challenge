@@ -89,7 +89,10 @@ export const RegistrationForm = () => {
   };
 
   return (
-    <Stack spacing={{ xs: 2, sm: 3 }} sx={{ pb: { xs: 3, sm: 4 } }}>
+    <Stack
+      spacing={{ xs: 2, sm: 3 }}
+      sx={{ pb: { xs: 3, sm: 4 }, mx: "auto", maxWidth: 720 }}
+    >
       <RegistrationFormStep currentStep={currentStep} />
 
       {currentStep === 0 && (

@@ -38,8 +38,6 @@ export const PasswordForm = ({
       <Stack
         spacing={{ xs: 2, sm: 2.5, md: 3 }}
         sx={{
-          mx: "auto",
-          maxWidth: 720,
           px: { xs: 2, sm: 3, md: 4 },
           py: { xs: 2, sm: 3 },
         }}
