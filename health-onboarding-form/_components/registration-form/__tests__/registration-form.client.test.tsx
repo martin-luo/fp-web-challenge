@@ -36,20 +36,40 @@ describe("RegistrationForm (happy path)", () => {
     await user.type(screen.getByLabelText(/mobile/i), "5551234567");
     await user.click(screen.getByRole("button", { name: /submit/i }));
 
-    await user.click(screen.getByRole("combobox"));
-    await user.click(await screen.findByText("Asthma"));
+    await screen.findByRole("heading", {
+      name: /health information disclaimer/i,
+    });
+    await user.click(
+      screen.getByRole("combobox", { name: /health conditions/i }),
+    );
+    await user.click(await screen.findByRole("option", { name: "Asthma" }));
     await user.keyboard("{Escape}");
+    await waitFor(() => {
+      expect(
+        screen.getByRole("combobox", { name: /health conditions/i }),
+      ).toHaveTextContent("Asthma");
+    });
     await user.click(screen.getByRole("button", { name: /continue/i }));
 
-    await user.click(screen.getByRole("combobox"));
-    await user.click(await screen.findByText("Basic Membership"));
+    await screen.findByRole("heading", { name: /choose your membership/i });
+    await user.click(screen.getByRole("combobox", { name: /membership/i }));
+    await user.click(
+      await screen.findByRole("option", { name: /basic membership/i }),
+    );
     await user.keyboard("{Escape}");
+    await waitFor(() => {
+      expect(
+        screen.getByRole("combobox", { name: /membership/i }),
+      ).toHaveTextContent("Basic Membership");
+    });
     await user.click(screen.getByRole("button", { name: /continue/i }));
 
+    await screen.findByRole("heading", { name: /review and confirm/i });
     await user.click(screen.getByRole("button", { name: /continue/i }));
+    await screen.findByRole("heading", { name: /almost there!/i });
 
-    await user.type(screen.getByLabelText(/^password$/i), "Secret123!");
-    await user.type(screen.getByLabelText(/confirm password/i), "Secret123!");
+    await user.type(await screen.findByLabelText(/^password/i), "Secret123!");
+    await user.type(screen.getByLabelText(/^confirm password/i), "Secret123!");
     await user.click(screen.getByRole("button", { name: /confirm & submit/i }));
 
     await waitFor(() => {
@@ -62,5 +82,5 @@ describe("RegistrationForm (happy path)", () => {
       });
       expect(replaceMock).toHaveBeenCalledWith("/confirmation");
     });
-  });
+  }, 15000);
 });

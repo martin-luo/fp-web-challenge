@@ -12,8 +12,8 @@ describe("PasswordForm", () => {
     });
     expect(continueButton).toBeDisabled();
 
-    await user.type(screen.getByLabelText(/password$/i), "Secret123!");
-    await user.type(screen.getByLabelText(/confirm password/i), "Secret123!");
+    await user.type(screen.getByLabelText(/^password/i), "Secret123!");
+    await user.type(screen.getByLabelText(/^confirm password/i), "Secret123!");
 
     expect(continueButton).toBeEnabled();
   });
@@ -23,8 +23,8 @@ describe("PasswordForm", () => {
     const onSubmit = jest.fn();
     render(<PasswordForm onSubmit={onSubmit} onBack={jest.fn()} />);
 
-    await user.type(screen.getByLabelText(/password$/i), "Secret123!");
-    await user.type(screen.getByLabelText(/confirm password/i), "Secret123!");
+    await user.type(screen.getByLabelText(/^password/i), "Secret123!");
+    await user.type(screen.getByLabelText(/^confirm password/i), "Secret123!");
     await user.click(screen.getByRole("button", { name: /confirm & submit/i }));
 
     expect(onSubmit).toHaveBeenCalledTimes(1);
