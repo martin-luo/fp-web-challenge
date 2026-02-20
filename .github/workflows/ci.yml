@@ -49,7 +49,7 @@ jobs:
       - name: "🧪 Run tests with coverage"
         if: matrix.node-version == '22.x'
         run: |
-          pnpm -C health-onboarding-form exec jest --projects jest.client.config.ts jest.server.config.ts --coverage --coverageReporters=text-summary --coverageReporters=lcov --coverageReporters=json-summary
+          pnpm -C health-onboarding-form run test:coverage
 
       - name: "📊 Add coverage report to workflow summary"
         if: matrix.node-version == '22.x'
