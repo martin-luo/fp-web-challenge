@@ -1,16 +1,14 @@
-"use client";
-
 import { getCurrentUser, isAuthenticated } from "@/_actions/auth";
-import { UserContext } from "@/_contexts/user-context";
+import { UserContextProvider } from "@/_contexts/user-context";
 import Link from "next/link";
 import { ReactNode } from "react";
 
-export function ProtectedRoute({ children }: { children: ReactNode }) {
-  if (!isAuthenticated()) {
-    return <Link href="/login" />;
+export async function ProtectedRoute({ children }: { children: ReactNode }) {
+  if (!(await isAuthenticated())) {
+    return <Link href="/login">Login</Link>;
   }
 
-  const user = getCurrentUser();
+  const user = await getCurrentUser();
 
-  return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
+  return <UserContextProvider user={user}>{children}</UserContextProvider>;
 }

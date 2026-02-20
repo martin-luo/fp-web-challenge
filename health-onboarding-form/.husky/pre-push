@@ -1,0 +1,10 @@
+#!/bin/sh
+set -e
+
+cd health-onboarding-form
+
+echo "Running tests before push..."
+pnpm test
+
+echo "Building project before push..."
+pnpm build

@@ -1,5 +1,5 @@
 import type { Config } from "jest";
-import nextJest from "next/jest";
+import nextJest from "next/jest.js";
 
 const createJestConfig = nextJest({
   // Provide the path to your Next.js app to load next.config.js and .env files
@@ -25,12 +25,18 @@ const customJestConfig: Config = {
     "^@/(.*)$": "<rootDir>/$1",
   },
   collectCoverageFrom: [
-    "src/**/*.{js,jsx,ts,tsx}",
-    "!src/**/*.d.ts",
-    "!src/**/*.stories.{js,jsx,ts,tsx}",
-    "!src/**/index.ts",
-    "!src/**/test-utils/*",
-    "!src/**/__tests__/*",
+    "app/**/*.{js,jsx,ts,tsx}",
+    "_actions/**/*.{js,jsx,ts,tsx}",
+    "_components/**/*.{js,jsx,ts,tsx}",
+    "_contexts/**/*.{js,jsx,ts,tsx}",
+    "_types/**/*.{js,jsx,ts,tsx}",
+    "types/**/*.{js,jsx,ts,tsx}",
+    "!**/*.d.ts",
+    "!**/*.stories.{js,jsx,ts,tsx}",
+    "!**/index.ts",
+    "!**/test-utils/*",
+    "!**/__tests__/*",
+    "!**/*.{test,spec}.{js,jsx,ts,tsx}",
   ],
 };
 
