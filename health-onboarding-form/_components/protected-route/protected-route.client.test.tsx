@@ -8,19 +8,18 @@ jest.mock("@/_actions/auth", () => ({
 }));
 
 describe("ProtectedRoute", () => {
-  it("should redirect to login if user is not authenticated", () => {
-    // Mock isAuthenticated to return false
-    jest.mocked(isAuthenticated).mockReturnValue(false);
+  it("should redirect to login if user is not authenticated", async () => {
+    jest.mocked(isAuthenticated).mockResolvedValue(false);
 
-    const { container } = render(
-      <ProtectedRoute>
-        <div>Protected Content</div>
-      </ProtectedRoute>,
-    );
+    const view = await ProtectedRoute({
+      children: <div>Protected Content</div>,
+    });
+    const { container } = render(view);
+
     expect(container.querySelector("a")).toHaveAttribute("href", "/login");
   });
 
-  it("should render children if user is authenticated", () => {
+  it("should render children if user is authenticated", async () => {
     const mockUser: User = {
       id: "1",
       email: "test@example.com",
@@ -29,15 +28,14 @@ describe("ProtectedRoute", () => {
       memberSince: "2023-01-01",
     };
 
-    // Mock isAuthenticated to return true and getCurrentUser to return a user object
-    jest.mocked(isAuthenticated).mockReturnValue(true);
-    jest.mocked(getCurrentUser).mockReturnValue(mockUser);
+    jest.mocked(isAuthenticated).mockResolvedValue(true);
+    jest.mocked(getCurrentUser).mockResolvedValue(mockUser);
 
-    const { getByText } = render(
-      <ProtectedRoute>
-        <div>Protected Content</div>
-      </ProtectedRoute>,
-    );
+    const view = await ProtectedRoute({
+      children: <div>Protected Content</div>,
+    });
+    const { getByText } = render(view);
+
     expect(getByText("Protected Content")).toBeInTheDocument();
   });
 });
